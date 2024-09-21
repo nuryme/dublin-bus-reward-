@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon" />
+    <title>Dublin Bus - Online Bus Ticket Booking With DOM Manipulation</title>
+
+    <!-- Font: Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Font Railway -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+
+    <!-- Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+
+    <!-- Link: Fontawesome CDN -->
+    <script src="https://kit.fontawesome.com/f811dd765f.js" crossorigin="anonymous"></script>
+
+    <!-- Link: TailwindCSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1dd100',
+                        secondary: '#030712',
+                        couponOne: '#ffbf0f',
+                        couponTwo: '#f78c9c',
+                        mobileMenu: '#f7f8f8',
+                        body: '#03071299',
+                        buttonColor: 'rgba(29, 209, 0, 0.15)',
+                    },
+                    fontFamily: {
+                        RaleWay: 'Raleway',
+                        Inter: 'Inter',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        th,
+        td {
+            padding: 20px 0;
+        }
+
+        .primary {
+            background-color: #1DD100;
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+
+    <main>
+        <section class="px-32 bg-mobileMenu pt-32 mt-28 rounded-t-[88px] border-t-2 border-primary">
+            <!-- p.h poribohon -->
+            <div>
+                <h1 class="font-RaleWay text-4xl font-bold text-secondary text-center">P.H Paribahan</h1>
+                <p class="text-lg font-normal font-Inter text-center leading-8 w-[736px] m-auto mt-6 text-body">Yes, you
+                    can run unit tests and view the results directly within the app. The integrated testing features
+                    allow for a streamlined .</p>
+                <div class="mt-12 bg-white rounded-3xl p-8 grid grid-cols-4 items-center">
+                    <div class="col-span-3">
+                        <div class="flex justify-between">
+                            <div class="flex items-center gap-4">
+                                <img src="images/bus-logo.png" alt="">
+                                <div>
+                                    <h3 class="text-secondary font-RaleWay text-3xl font-bold">Greenline Paribahan</h3>
+                                    <p class="text-lg font-normal font-Inter text-body">Coach-009-WEB ! AC_Business</p>
+                                </div>
+                            </div>
+                            <button
+                                class="bg-buttonColor p-3 text-primary text-lg font-Inter font-medium flex items-center rounded-xl gap-2"><img
+                                    src="images/seat-green.png" alt=""><span id="available-seat">40</span> Seats
+                                left</button>
+                        </div>
+                        <div class="mt-6 bg-mobileMenu p-8 rounded-3xl">
+                            <div class="flex justify-between pb-6 border-b-2 border-dashed border-gray-200">
+                                <p class="text-lg font-semibold font-RaleWay text-body">Route</p>
+                                <h5 class="text-lg font-semibold font-RaleWay text-secondary">Dhaka - Sylhet</h5>
+                            </div>
+                            <div class="flex justify-between py-6 border-b-2 border-dashed border-gray-200">
+                                <p class="text-lg font-semibold font-RaleWay text-body">Departure Time</p>
+                                <h5 class="text-lg font-semibold font-RaleWay text-secondary">9:00 PM</h5>
+                            </div>
+                            <div class="pt-6 flex justify-between">
+                                <div
+                                    class="rounded-xl bg-gray-200 w-[232px] h-[56px] text-base font-medium flex items-center justify-center">
+                                    Boarding Point - Laxmipur</div>
+                                <div
+                                    class="rounded-xl bg-gray-200 w-[232px] h-[56px] text-base font-medium flex items-center justify-center">
+                                    Dropping Point - Bogura</div>
+                                <div
+                                    class="rounded-xl bg-gray-200 w-[232px] h-[56px] text-base font-medium flex items-center justify-center">
+                                    Est. Time - 11 Hour</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center flex flex-col justify-center items-center">
+                        <img src="images/fare.png" alt="" class="m-auto mb-6">
+                        <h2 class="font-RaleWay text-2xl font-semibold text-center">550 <span
+                                class="text-body block">Taka</span></h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- current available but services -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg grid grid-cols-3 mt-12">
+                <!-- left: seat -->
+                <div class="col-span-2 pr-8 border-r-2 border-gray-200 border-dashed">
+                    <h1 class="text-2xl font-semibold leading-7 font-[RaleWay]">Select Your Seat</h1>
+                    <div class="border-b-2 border-dashed my-4"></div>
+                    <div class="flex justify-between items-center">
+                        <p class="text-[#03071299]">
+                            <i class="fa-solid fa-couch"></i>
+                            <span>Available</span>
+                        </p>
+                        <p class="text-[#1DD100]">
+                            <i class="fa-solid fa-couch texbl"></i>
+                            <span>Selected</span>
+                        </p>
+                    </div>
+                    <div class="border-b-2 border-dashed my-4"></div>
+
+                    <!-- section: seat section -->
+                    <div class="">
+                        <div class="grid grid-cols-6 gap-6 items-center w-full justify-between">
+                            <div class="col-span-5"></div>
+                            <div class="rounded-xl 
+                        py-6 px-4 flex items-center justify-center bg-gray-200 self-end"><i
+                                    class="fa-solid fa-dharmachakra text-2xl"></i></div>
+                            <p class="capitalize font-Inter text-lg text-body">a</p>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">a1</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">a2</button>
+                            <div class="
+                        py-6 px-4"></div>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">a3</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">a4</button>
+                            <p class="capitalize font-Inter text-lg text-body">c</p>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">b1</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">b2</button>
+                            <div class="
+                        py-6 px-4"></div>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">b3</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">b4</button>
+                            <p class="capitalize font-Inter text-lg text-body">b</p>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">c1</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">c2</button>
+                            <div class="
+                        py-6 px-4"></div>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">c3</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">c4</button>
+                            <p class="capitalize font-Inter text-lg text-body">d</p>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">d1</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">d2</button>
+                            <div class="
+                        py-6 px-4"></div>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">d3</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">d4</button>
+                            <p class="capitalize font-Inter text-lg text-body">e</p>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">e1</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">e2</button>
+                            <div class="
+                        py-6 px-4"></div>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">e3</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">e4</button>
+                            <p class="capitalize font-Inter text-lg text-body">f</p>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">f1</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">f2</button>
+                            <div class="
+                        py-6 px-4"></div>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">f3</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">f4</button>
+                            <p class="capitalize font-Inter text-lg text-body">g</p>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">g1</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">g2</button>
+                            <div class="
+                        py-6 px-4"></div>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">g3</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">g4</button>
+                            <p class="capitalize font-Inter text-lg text-body">h</p>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">h1</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">h2</button>
+                            <div class="
+                        py-6 px-4"></div>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">h3</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">h4</button>
+                            <p class="capitalize font-Inter text-lg text-body">i</p>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">i1</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">i2</button>
+                            <div class="
+                        py-6 px-4"></div>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">i3</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">i4</button>
+                            <p class="capitalize font-Inter text-lg text-body">j</p>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">j1</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">j2</button>
+                            <div class="
+                        py-6 px-4"></div>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">j3</button>
+                            <button onclick="handler(this)"
+                                class="bg-[#F7F8F8] 
+                            py-6 px-4 rounded-xl capitalize font-Inter text-lg hover:bg-[#030712] hover:text-white transition-colors ease-in-out seat-btn">j4</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- right: input -->
+                <div class="space-y-4 pl-8">
+                    <h1 class="text-2xl font-semibold leading-7 font-[RaleWay]">Select Your Seat</h1>
+                    <div class="border-b-2 border-dashed"></div>
+                    <div class="p-8 bg-[#F7F8F8]">
+                        <div>
+                            <div class="text-lg font-bold flex justify-between">
+                                <p class="capitalize font-bold flex">
+                                    seat
+                                    <span id="total-booked"
+                                        class="bg-[#1DD100] w-6 h-3 p-2 rounded-full flex items-center justify-center font-normal text-sm text-white font-medium">0</span>
+                                </p>
+                                <p class="capitalize font-bold flex">
+                                    class
+                                </p>
+                                <p class="capitalize font-bold flex">
+                                    price
+                                </p>
+                            </div>
+                            <div class="border-b-2 border-dashed my-6"></div>
+                            <div class="border-b-2 border-dashed my-4">
+                                <ul class="space-y-5 pb-6" id="selected-seat">
+                                    <h3 class="text-3xl text-red-600 capitalize text-center font-semibold" id="no-seat">
+                                        no seat
+                                        booked
+                                    </h3>
+                                </ul>
+                            </div>
+                            <div class="text-lg font-bold flex justify-between mb-6">
+                                <p class="capitalize">total price</p>
+                                <p>
+                                    <span>BDT: </span>
+                                    <span id="total-price">****</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center bg-white p-3 rounded-xl gap-2" id="coupon-apply">
+                            <input id="coupon-field" type="text" placeholder="Have any coupon?"
+                                class="input w-full input-primary border-primary outline-none bg-white" disabled>
+                            <button id="coupon-btn" class="btn bg-primary text-white font-semibold"
+                                disabled>Apply</button>
+                        </div>
+                        <div class="text-lg font-bold flex justify-between mt-6">
+                            <p class="capitalize">Grand Total</p>
+                            <p>
+                                <span>BDT: </span>
+                                <span id="grand-price">****</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex-col flex gap-4">
+                            <label for="" class="font-semibold font-Inter text-base">Passenger Name*</label>
+                            <input type="text" placeholder="Enter your name"
+                                class="p-6 bg-white border border-gray-100 rounded-lg" required>
+                        </div>
+                        <div class="flex-col flex gap-4">
+                            <label for="" class="font-semibold font-Inter text-base">Phone Number*</label>
+                            <input id="phone-number" type="text" placeholder="Enter your phone number"
+                                class="p-6 bg-white border border-gray-100 rounded-lg" required>
+                        </div>
+                        <div class="flex-col flex gap-4">
+                            <label for="" class="font-semibold font-Inter text-base">Email ID</label>
+                            <input type="text" placeholder="Enter your email id"
+                                class="p-6 bg-white border border-gray-100 rounded-lg">
+                        </div>
+                    </div>
+                    <div class="w-full grid">
+                        <button onclick="my_modal_1.showModal()" class="w-full btn bg-primary mt-5 text-lg uppercase text-white font-extrabold" disabled
+                            id="next-btn">Next</button>
+                    </div>
+                    <dialog id="my_modal_1" class="modal">
+                        <form method="dialog" class="modal-box px-5 py-10 flex flex-col justify-center items-center">
+                            <i class="fa-regular fa-circle-check text-6xl text-primary"></i>
+                            <h3 class="font-bold text-2xl text-primary my-5">
+                                Congratulations
+                            </h3>
+                            <div class="text-center">
+                                <p class="font-bold">
+                                    Thank you for booking our bus seats. We are working hard
+                                    to find the best Service and deals for you.
+                                </p>
+                            </div>
+                            <p class="my-2">
+                                Shortly you will find a confirmation in your email
+                            </p>
+                            <button id="btn-continue"
+                                class="btn bg-primary px-16 btn-md hover:bg-black transition-colors ease-in duration-300 text-white">
+                                Continue
+                            </button>
+                        </form>
+                    </dialog>
+                    <div class="flex justify-center gap-10">
+                        <a href="#"
+                            class="underline hover:text-[#1DD100] transition-colors ease-in-out text-gray-500">Terms
+                            and Conditions</a>
+                        <a href="#"
+                            class="underline hover:text-[#1DD100] transition-colors ease-in-out text-gray-500">Cancellation
+                            Policy</a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer></footer>
+
+    <script src="js/index.js"></script>
+</body>
+
+</html>
